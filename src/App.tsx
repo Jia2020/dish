@@ -11,6 +11,7 @@ import confetti from "canvas-confetti";
 
 export default function App() {
   const [image, setImage] = useState<string | null>(null);
+  const [imageUrlInput, setImageUrlInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState<string | null>(null);
   const [result, setResult] = useState<DeconstructionResult | null>(null);
@@ -27,6 +28,33 @@ export default function App() {
         setError(null);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUrlSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!imageUrlInput.trim()) return;
+    
+    setLoading(true);
+    setError(null);
+    try {
+      const proxyUrl = `/api/proxy-image?url=${encodeURIComponent(imageUrlInput)}`;
+      const response = await fetch(proxyUrl);
+      if (!response.ok) throw new Error("Failed to fetch image via proxy");
+      const blob = await response.blob();
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+        setResult(null);
+        setImageUrlInput("");
+        setLoading(false);
+      };
+      reader.readAsDataURL(blob);
+    } catch (err) {
+      console.error(err);
+      setError("Unable to grab image from this link. Most sites block this for security (CORS). Try downloading and uploading instead!");
+      setLoading(false);
     }
   };
 
@@ -121,7 +149,8 @@ export default function App() {
 
               <div className="w-full">
                 {!image ? (
-                  <motion.div
+                  <>
+                    <motion.div
                     onClick={() => fileInputRef.current?.click()}
                     className="cursor-pointer group"
                   >
@@ -142,6 +171,34 @@ export default function App() {
                       />
                     </Card>
                   </motion.div>
+                  
+                  <div className="mt-8 space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="h-[1px] flex-1 bg-stone-100" />
+                      <span className="label-text text-stone-300">OR</span>
+                      <div className="h-[1px] flex-1 bg-stone-100" />
+                    </div>
+                    
+                    <form onSubmit={handleUrlSubmit} className="flex gap-2">
+                      <input 
+                        type="url" 
+                        placeholder="Paste image link here..."
+                        value={imageUrlInput}
+                        onChange={(e) => setImageUrlInput(e.target.value)}
+                        className="flex-1 bg-white border border-stone-200 rounded-[4px] px-4 py-2 text-sm focus:outline-none focus:border-amber-600 transition-colors disabled:opacity-50"
+                        disabled={loading}
+                      />
+                      <Button 
+                        type="submit" 
+                        disabled={loading || !imageUrlInput.trim()}
+                        variant="secondary"
+                        className="rounded-[4px] border-stone-200 hover:bg-stone-50"
+                      >
+                        {loading && imageUrlInput ? <Loader2 className="w-4 h-4 animate-spin" /> : "Load Link"}
+                      </Button>
+                    </form>
+                  </div>
+                </>
                 ) : (
                   <div className="space-y-6">
                     <Card className="bg-white border-stone-200 overflow-hidden rounded-lg shadow-xl p-3 relative aspect-[4/3] flex items-center justify-center">

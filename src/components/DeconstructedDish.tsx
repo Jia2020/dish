@@ -67,9 +67,6 @@ export function ExplodedDish({ originalImage, result }: ExplodedDishProps) {
                   transition={{ delay: 0.1 + i * 0.05 }}
                 >
                   <div className="bg-white border border-stone-200 rounded-lg p-5 flex items-center gap-6 group hover:border-amber-600 transition-all shadow-sm">
-                    <div className="w-16 h-16 rounded-lg bg-stone-50 flex items-center justify-center text-3xl border border-stone-100 group-hover:bg-amber-50 transition-colors shrink-0">
-                      {item.emoji}
-                    </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start">
                         <div>
@@ -78,9 +75,6 @@ export function ExplodedDish({ originalImage, result }: ExplodedDishProps) {
                              {item.chineseName && <span className="text-stone-300 font-medium text-xs tracking-normal">{item.chineseName}</span>}
                           </h4>
                           <p className="text-stone-500 text-[12px] mt-1 leading-snug">{item.description}</p>
-                        </div>
-                        <div className="text-[10px] font-black text-emerald-600 tracking-tighter uppercase whitespace-nowrap">
-                          98.2% Scan
                         </div>
                       </div>
                     </div>

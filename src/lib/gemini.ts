@@ -13,7 +13,7 @@ export async function deconstructDish(imageBase64: string, mimeType: string): Pr
         parts: [
           {
             text: `Analyze this food image and deconstruct it into its primary ingredients. 
-            Provide the name, a brief description, an appropriate emoji, and an optional Chinese name for each ingredient.
+            Provide the name, a brief description, and an optional Chinese name for each ingredient.
             Also, assign a layerIndex to each ingredient to represent its order in an 'exploded view' (bottom to top). 
             Layer 0 should be the finished dish itself.
             Return the result as a JSON object.`
@@ -42,10 +42,9 @@ export async function deconstructDish(imageBase64: string, mimeType: string): Pr
                 name: { type: Type.STRING },
                 chineseName: { type: Type.STRING },
                 description: { type: Type.STRING },
-                emoji: { type: Type.STRING },
                 layerIndex: { type: Type.NUMBER }
               },
-              required: ["name", "description", "emoji", "layerIndex"]
+              required: ["name", "description", "layerIndex"]
             }
           }
         },
