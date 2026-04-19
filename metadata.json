@@ -1,0 +1,6 @@
+{
+  "name": "Dish Deconstructor",
+  "description": "Upload a food photo to deconstruct its ingredients in a beautiful, animated exploded view.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
