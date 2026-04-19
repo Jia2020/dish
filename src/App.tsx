@@ -80,10 +80,6 @@ export default function App() {
         </div>
         
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex gap-6 label-text text-[10px]">
-            <a href="#" className="hover:text-stone-900 transition-colors">How it works</a>
-            <a href="#" className="hover:text-stone-900 transition-colors">Technology</a>
-          </div>
           <Button variant="default" className="rounded-[4px] h-10 px-6 text-xs font-bold uppercase tracking-wider bg-stone-900 hover:bg-stone-800 text-white border-none">
             New Analysis
           </Button>

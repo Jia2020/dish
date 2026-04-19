@@ -65,7 +65,7 @@ export async function generateExplodedView(dishName: string, ingredients: any[])
   
   const ingredientString = ingredients
     .filter(i => i.layerIndex > 0)
-    .map(i => `${i.name} (${i.chineseName || ""})`)
+    .map(i => i.name)
     .join(", ");
     
   const prompt = `Create a high-quality commercial food photography style image. 
@@ -73,7 +73,8 @@ export async function generateExplodedView(dishName: string, ingredients: any[])
   The ingredients are shown floating and stacked vertically in mid-air against a solid black background.
   The stack includes: ${ingredientString}.
   At the bottom, more central, is the finished bowl or plate of ${dishName}.
-  Dynamic, sharp focus, professional studio lighting, realistic textures, steam rising from deep-colored broth.`;
+  Dynamic, sharp focus, professional studio lighting, realistic textures.
+  IMPORTANT: Do NOT include any text, labels, or names in the image. The focus should be purely on the visual deconstruction of the food components.`;
 
   const response = await ai.models.generateContent({
     model,
